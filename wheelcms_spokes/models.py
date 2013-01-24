@@ -1,3 +1,5 @@
+import re
+
 from django.db import models
 from django import forms
 from wheelcms_axle.models import Content, Node
@@ -12,7 +14,7 @@ class BaseForm(forms.ModelForm):
     class Meta:
         exclude = ["node", "meta_type", "owner", "classes"]
 
-    slug = forms.Field(required=True)
+    slug = forms.Field(required=False)
 
     def __init__(self, parent=None, attach=False, *args, **kwargs):
         """
@@ -61,6 +63,24 @@ class BaseForm(forms.ModelForm):
             return
 
         slug = self.data.get('slug', '').strip().lower()
+
+        if not slug:
+            slug = re.sub("[^%s]+" % Node.ALLOWED_CHARS, "-",
+                          self.data.get('title', '').lower())[:Node.MAX_PATHLEN]
+            try:
+                existing = Node.objects.filter(path=self.parent.path
+                                               + "/" + slug).get()
+                base_slug = slug[:Node.MAX_PATHLEN-6] ## some space for counter
+                count = 1
+                while existing and existing != self.instance.node:
+                    slug = base_slug + str(count)
+                    existing = Node.objects.filter(path=self.parent.path
+                                                   + "/" + slug).get()
+                    count += 1
+
+            except Node.DoesNotExist:
+                pass
+
         if not Node.validpathre.match(slug):
             raise forms.ValidationError("Only numbers, letters, _-")
         try:
