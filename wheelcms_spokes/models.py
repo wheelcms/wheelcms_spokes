@@ -68,7 +68,8 @@ class BaseForm(forms.ModelForm):
 
         if not slug:
             slug = re.sub("[^%s]+" % Node.ALLOWED_CHARS, "-",
-                          self.data.get('title', '').lower())[:Node.MAX_PATHLEN]
+                          self.data.get('title', '').lower()
+                          )[:Node.MAX_PATHLEN].strip("-")
             try:
                 existing = Node.objects.filter(path=parent_path
                                                + "/" + slug).get()

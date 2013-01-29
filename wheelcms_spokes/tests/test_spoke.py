@@ -126,8 +126,64 @@ class BaseSpokeTemplateTest(object):
         form = self.type.form(parent=p, data=data, files=self.valid_files())
 
         assert form.is_valid()
-        assert form.data['template'] == "foo/bar3"
+        assert form.cleaned_data['template'] == "foo/bar3"
 
+    def test_slug_exists(self, client):
+        """ a slug has been chosen that's already in use """
+        self.reg.register(self.type, "foo/bar", "foo bar", default=False)
+        p = Node.root()
+        p.add('foo')
+        data = self.valid_data()
+        data['slug'] = 'foo'
+        data['title'] = 't'
+        data['template'] = 'foo/bar'
+
+        form = self.type.form(parent=p, data=data, files=self.valid_files())
+
+        assert not form.is_valid()
+        assert 'slug' in form.errors
+        assert form.errors['slug'].pop() == 'Name in use'  ## fragile
+
+    def test_slug_generate(self, client):
+        """ test slug generation """
+        self.reg.register(self.type, "foo/bar", "foo bar", default=False)
+        p = Node.root()
+        data = self.valid_data()
+        data['title'] = 'Hello World'
+        data['template'] = 'foo/bar'
+
+        form = self.type.form(parent=p, data=data, files=self.valid_files())
+
+        assert form.is_valid()
+
+    def test_slug_generate_complex(self, client):
+        """ test slug generation """
+        self.reg.register(self.type, "foo/bar", "foo bar", default=False)
+        p = Node.root()
+        data = self.valid_data()
+        data['title'] = 'Hello World, What\'s up?'
+        data['slug'] = ''
+        data['template'] = 'foo/bar'
+
+        form = self.type.form(parent=p, data=data, files=self.valid_files())
+
+        assert form.is_valid()
+        assert form.cleaned_data['slug'] == 'hello-world-what-s-up'
+
+    def test_slug_generate_conflict(self, client):
+        """ slug generation should not create duplicate slugs """
+        self.reg.register(self.type, "foo/bar", "foo bar", default=False)
+        p = Node.root()
+        p.add('foo')
+        data = self.valid_data()
+        data['slug'] = ''
+        data['title'] = 'foo'
+        data['template'] = 'foo/bar'
+
+        form = self.type.form(parent=p, data=data, files=self.valid_files())
+
+        assert form.is_valid()
+        assert form.cleaned_data['slug'] == 'foo1'
 
 class TestType1Spoke(BaseSpokeTest):
     """
