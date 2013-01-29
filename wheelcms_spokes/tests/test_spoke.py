@@ -67,10 +67,11 @@ class BaseSpokeTemplateTest(object):
         self.registry = TypeRegistry()
         type_registry.set(self.registry)
         self.registry.register(self.type)
+        self.root = Node.root()
 
     def test_empty(self, client):
         """ An empty registry """
-        form = self.type.form()
+        form = self.type.form(parent=self.root)
         assert 'template' not in form.fields
         model = self.type.model()
         model.save()
@@ -79,7 +80,7 @@ class BaseSpokeTemplateTest(object):
     def test_single(self, client):
         """ An single template registered """
         self.reg.register(self.type, "foo/bar", "foo bar", default=False)
-        form = self.type.form()
+        form = self.type.form(parent=self.root)
         assert 'template' in form.fields
         assert form.fields['template'].choices == [('foo/bar', 'foo bar')]
         model = self.type.model()
@@ -107,7 +108,7 @@ class BaseSpokeTemplateTest(object):
     def test_form_validation_fail(self, client):
         """ Only registered templates are allowed """
         self.reg.register(self.type, "foo/bar", "foo bar", default=False)
-        form = self.type.form(data={'template':"bar/foo"})
+        form = self.type.form(parent=self.root, data={'template':"bar/foo"})
         assert not form.is_valid()
         assert 'template' in form.errors
 

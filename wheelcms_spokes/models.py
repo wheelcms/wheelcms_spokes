@@ -16,7 +16,7 @@ class BaseForm(forms.ModelForm):
 
     slug = forms.Field(required=False)
 
-    def __init__(self, parent=None, attach=False, *args, **kwargs):
+    def __init__(self, parent, attach=False, *args, **kwargs):
         """
             Django will put the extra slug field at the bottom, below
             all model fields. I want it just after the title field
@@ -64,11 +64,13 @@ class BaseForm(forms.ModelForm):
 
         slug = self.data.get('slug', '').strip().lower()
 
+        parent_path = self.parent.path
+
         if not slug:
             slug = re.sub("[^%s]+" % Node.ALLOWED_CHARS, "-",
                           self.data.get('title', '').lower())[:Node.MAX_PATHLEN]
             try:
-                existing = Node.objects.filter(path=self.parent.path
+                existing = Node.objects.filter(path=parent_path
                                                + "/" + slug).get()
                 base_slug = slug[:Node.MAX_PATHLEN-6] ## some space for counter
                 count = 1
@@ -84,7 +86,7 @@ class BaseForm(forms.ModelForm):
         if not Node.validpathre.match(slug):
             raise forms.ValidationError("Only numbers, letters, _-")
         try:
-            existing = Node.objects.filter(path=self.parent.path + "/" + slug
+            existing = Node.objects.filter(path=parent_path + "/" + slug
                                           ).get()
             if existing != self.instance.node:
                 raise forms.ValidationError("Name in use")
