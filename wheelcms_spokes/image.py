@@ -2,7 +2,7 @@ from django.db import models
 from wheelcms_axle.models import type_registry
 from wheelcms_spokes.templates import template_registry
 from wheelcms_axle.models import ImageContent
-from wheelcms_spokes.models import Spoke
+from wheelcms_spokes.models import FileSpoke
 
 
 class Image(ImageContent):
@@ -10,7 +10,7 @@ class Image(ImageContent):
     ## cannot be named image - that's used for the content base relation
     storage = models.ImageField(upload_to="images", blank=False)
 
-class ImageType(Spoke):
+class ImageType(FileSpoke):
     model = Image
 
     title = "An image"

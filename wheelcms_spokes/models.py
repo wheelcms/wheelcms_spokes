@@ -68,7 +68,7 @@ class BaseForm(forms.ModelForm):
 
         if not slug:
             slug = re.sub("[^%s]+" % Node.ALLOWED_CHARS, "-",
-                          self.data.get('title', '').lower()
+                          self.cleaned_data.get('title', '').lower()
                           )[:Node.MAX_PATHLEN].strip("-")
             try:
                 existing = Node.objects.filter(path=parent_path
@@ -113,6 +113,25 @@ def formfactory(type):
             exclude = BaseForm.Meta.exclude + ["created", "modified"]
     return Form
 
+def FileFormfactory(type):
+    """
+        Provide a form that has an optional title field. If left
+        unspecified, take the filename from the uploaded file in stead.
+    """
+    class Form(formfactory(type)):
+        def __init__(self, *args, **kw):
+            """ make the title field not required """
+            super(Form, self).__init__(*args, **kw)
+            self.fields['title'].required = False
+
+        def clean_title(self):
+            """ generate title based on filename if necessary """
+            title = self.data.get('title').strip()
+            if not title:
+                title = self.files.get('storage').name
+            return title
+    return Form
+
 
 class Spoke(object):
     model = Content  ## is it smart to set this to Content? A nonsensible default..
@@ -134,6 +153,11 @@ class Spoke(object):
     @classproperty
     def form(cls):
         return formfactory(cls.model)
+
+    @classproperty
+    def light_form(cls):
+        """ a smaller, lightweight form with minimal requirements """
+        return cls.form
 
     @classmethod
     def name(cls):
@@ -185,6 +209,12 @@ class Spoke(object):
             ch = cls.children
 
         return ch
+
+
+class FileSpoke(Spoke):
+    @classproperty
+    def form(cls):
+        return FileFormfactory(cls.model)
 
 import wheelcms_spokes.page
 import wheelcms_spokes.news
