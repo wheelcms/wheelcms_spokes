@@ -113,16 +113,25 @@ def formfactory(type):
             exclude = BaseForm.Meta.exclude + ["created", "modified"]
     return Form
 
-def FileFormfactory(type):
+def FileFormfactory(type, light=False):
     """
         Provide a form that has an optional title field. If left
         unspecified, take the filename from the uploaded file in stead.
     """
-    class Form(formfactory(type)):
+    base = formfactory(type)
+
+    class Form(base):
+        class Meta(base.Meta):
+            if light:
+                fields = [ 'title', 'state', 'storage' ]
+
         def __init__(self, *args, **kw):
             """ make the title field not required """
             super(Form, self).__init__(*args, **kw)
             self.fields['title'].required = False
+            if light:
+                self.fields['slug'].widget = forms.HiddenInput()
+                self.fields['template'].widget = forms.HiddenInput()
 
         def clean_title(self):
             """ generate title based on filename if necessary """
@@ -215,6 +224,10 @@ class FileSpoke(Spoke):
     @classproperty
     def form(cls):
         return FileFormfactory(cls.model)
+
+    @classproperty
+    def light_form(cls):
+        return FileFormfactory(cls.model, light=True)
 
 import wheelcms_spokes.page
 import wheelcms_spokes.news
