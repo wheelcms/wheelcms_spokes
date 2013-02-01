@@ -197,6 +197,10 @@ class Spoke(object):
 
         return self.o.template
 
+    def detail_template(self):
+        """ A small detail template, used in browse modal """
+        return "wheelcms_axle/popup_detail.html"
+
     def fields(self):
         """ iterate over fields in model """
         for i in self.o._meta.fields:

@@ -1,0 +1,28 @@
+{% extends "wheelcms_axle/popup_detail.html" %}
+
+{% block content %}
+<div class="row-fluid">
+ <div class="span12 image-content">
+   <img class="img-polaroid detail-image" src="{{MEDIA_URL}}{{instance.content.storage}}">
+ </div>
+</div>
+<div class="row-fluid">
+  <div class="span12">
+    <div class="controls">
+      <label class="control-label" for="size">Image size</label>
+      <label class="checkbox">
+        <input type="radio" name="size" value="thumb" checked="checked"> thumb
+      </label>
+      <label class="checkbox">
+        <input type="radio" name="size" value="small"> small
+      </label>
+      <label class="checkbox">
+        <input type="radio" name="size" value="mediun"> medium
+      </label>
+      <label class="checkbox">
+        <input type="radio" name="size" value="large"> large
+      </label>
+    </div>
+  </div>
+</div>
+{% endblock %}

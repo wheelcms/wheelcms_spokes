@@ -16,5 +16,9 @@ class ImageType(FileSpoke):
     title = "An image"
     children = ()
 
+    def detail_template(self):
+        """ A small detail template, used in browse modal """
+        return "wheelcms_spokes/image_detail.html"
+
 template_registry.register(ImageType, "wheelcms_spokes/image_view.html", "Basic Image view", default=True)
 type_registry.register(ImageType)

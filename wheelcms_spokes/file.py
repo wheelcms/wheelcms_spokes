@@ -15,5 +15,9 @@ class FileType(FileSpoke):
     title = "A file"
     children = ()
 
+    def detail_template(self):
+        """ A small detail template, used in browse modal """
+        return "wheelcms_spokes/file_detail.html"
+
 template_registry.register(FileType, "wheelcms_spokes/file_view.html", "Basic News view", default=True)
 type_registry.register(FileType)
