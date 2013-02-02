@@ -1,6 +1,7 @@
 import re
+import mimetypes
 
-from django.db import models
+from django.http import HttpResponse
 from django import forms
 from wheelcms_axle.models import Content, Node
 from wheelcms_axle.workflows.default import DefaultWorkflow
@@ -125,6 +126,13 @@ def FileFormfactory(type, light=False):
             if light:
                 fields = [ 'title', 'state', 'storage' ]
 
+        content_type = forms.ChoiceField(
+                        choices=(('', 'detect type'),) +
+                                 tuple((x, x) for x in
+                                       sorted(mimetypes.types_map.values())
+                                ), required=False)
+
+
         def __init__(self, *args, **kw):
             """ make the title field not required """
             super(Form, self).__init__(*args, **kw)
@@ -238,6 +246,28 @@ class FileSpoke(Spoke):
     @classproperty
     def light_form(cls):
         return FileFormfactory(cls.model, light=True)
+
+    def handle_download(self):
+        """ provide a direct download
+
+            What's the best option: redirect to {{MEDIA_URL}}/<path> or
+            serve from the cms? The former is far more efficient (can be handled
+            by the application server), the latter allows more restrictions,
+            headers, mangling, etc.
+
+            For now, let's choose the inefficient option
+        """
+        ## test workflow state / permissions! XXX
+
+        filename = self.instance.filename or self.instance.title
+        content_type = self.instance.content_type or "application/octet-stream"
+
+        response = HttpResponse(self.instance.storage, content_type=content_type)
+        response['Content-Type'] = content_type
+
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+        return response
+
 
 import wheelcms_spokes.page
 import wheelcms_spokes.news

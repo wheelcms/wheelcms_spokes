@@ -11,7 +11,7 @@ from wheelcms_spokes.image import ImageType
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 
-class BaseImageFileTest(BaseSpokeTemplateTest):
+class BaseImageFileTemplateTest(BaseSpokeTemplateTest):
     """
         Shared customization/tests
     """
@@ -26,39 +26,7 @@ class BaseImageFileTest(BaseSpokeTemplateTest):
         assert self.type.children is not None
         assert len(self.type.children) == 0
 
-
-class TestImageSpokeTemplate(BaseImageFileTest):
-    """
-        Test the image spoke
-    """
-    type = ImageType
-    typename = "image"
-
-
-class TestImageSpoke(BaseSpokeTest):
-    """
-        Test the image spoke
-    """
-    type = ImageType
-    typename = "image"
-
-
-class TestFileSpokeTemplate(BaseImageFileTest):
-    """
-        Test the file spoke
-    """
-    type = FileType
-    typename = "file"
-
-
-class TestFileSpoke(BaseSpokeTest):
-    """
-        Test the file spoke
-
-    """
-    type = FileType
-    typename = "file"
-
+class BaseImageFileTest(BaseSpokeTest):
     def test_download(self, client):
         data = 'GIF87a\x01\x00\x01\x00\x80\x01\x00\x00\x00\x00ccc,\x00' \
                    '\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;'
@@ -87,6 +55,50 @@ class TestFileSpoke(BaseSpokeTest):
                'attachment; filename=foo.png'
         assert response['Content-Type'] == "image/png"
 
+    def test_filename_slash(self, client):
+        """ make sure the filename cannot contain directory components """
+        data = 'GIF87a\x01\x00\x01\x00\x80\x01\x00\x00\x00\x00ccc,\x00' \
+                   '\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;'
+        storage=SimpleUploadedFile("foo.png", data)
+        f = self.type.model(storage=storage, filename="/etc/passwd").save()
+        assert f.filename == "passwd"
+
+        f = self.type.model(storage=storage, filename="../foo.png").save()
+        assert f.filename == "foo.png"
+
     def test_download_state(self, client):
         """ file must be "visible" in order to be downloadable """
         pytest.skip("TODO XXX")
+
+class TestImageSpokeTemplate(BaseImageFileTemplateTest):
+    """
+        Test the image spoke
+    """
+    type = ImageType
+    typename = "image"
+
+
+class TestImageSpoke(BaseImageFileTest):
+    """
+        Test the image spoke
+    """
+    type = ImageType
+    typename = "image"
+
+
+class TestFileSpokeTemplate(BaseImageFileTemplateTest):
+    """
+        Test the file spoke
+    """
+    type = FileType
+    typename = "file"
+
+
+class TestFileSpoke(BaseImageFileTest):
+    """
+        Test the file spoke
+
+    """
+    type = FileType
+    typename = "file"
+
