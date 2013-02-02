@@ -2,7 +2,10 @@
     test file/image based on spoke base tests
 """
 
-from wheelcms_spokes.tests.test_spoke import BaseSpokeTemplateTest, BaseSpokeTest
+import pytest
+
+from wheelcms_spokes.tests.test_spoke import BaseSpokeTemplateTest, \
+                                             BaseSpokeTest
 from wheelcms_spokes.file import FileType
 from wheelcms_spokes.image import ImageType
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -51,6 +54,39 @@ class TestFileSpokeTemplate(BaseImageFileTest):
 class TestFileSpoke(BaseSpokeTest):
     """
         Test the file spoke
+
     """
     type = FileType
     typename = "file"
+
+    def test_download(self, client):
+        data = 'GIF87a\x01\x00\x01\x00\x80\x01\x00\x00\x00\x00ccc,\x00' \
+                   '\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;'
+        storage=SimpleUploadedFile("foo.png", data)
+        f = self.type.model(storage=storage,
+                            filename="bar.png",
+                            content_type="application/octet-stream").save()
+        spoke = self.type(f)
+        response = spoke.handle_download()
+        assert response.content == data
+        assert response.has_header('Content-Disposition')
+        assert response['Content-Disposition'] == \
+               'attachment; filename=bar.png'
+        assert response['Content-Type'] == "application/octet-stream"
+
+    def test_download_defaults(self, client):
+        data = 'GIF87a\x01\x00\x01\x00\x80\x01\x00\x00\x00\x00ccc,\x00' \
+                   '\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;'
+        storage=SimpleUploadedFile("foo.png", data)
+        f = self.type.model(storage=storage).save()
+        spoke = self.type(f)
+        response = spoke.handle_download()
+        assert response.content == data
+        assert response.has_header('Content-Disposition')
+        assert response['Content-Disposition'] == \
+               'attachment; filename=foo.png'
+        assert response['Content-Type'] == "image/png"
+
+    def test_download_state(self, client):
+        """ file must be "visible" in order to be downloadable """
+        pytest.skip("TODO XXX")

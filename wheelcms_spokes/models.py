@@ -135,9 +135,15 @@ def FileFormfactory(type, light=False):
 
         def clean_title(self):
             """ generate title based on filename if necessary """
-            title = self.data.get('title').strip()
-            if not title:
-                title = self.files.get('storage').name
+            title = self.data.get('title', '').strip()
+            try:
+              if not title:
+                  title = self.files.get('storage').name
+            except AttributeError:
+                ## there is no file upload. This will cause validation
+                ## to fail at a later stage but it shouldn't produce
+                ## errors now
+                title = ''
             return title
     return Form
 
