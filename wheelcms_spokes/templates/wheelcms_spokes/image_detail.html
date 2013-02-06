@@ -6,6 +6,7 @@
    <img class="img-polaroid detail-image" src="{{MEDIA_URL}}{{instance.content.storage}}">
  </div>
 </div>
+{% if selectable %}
 <div class="row-fluid">
   <div class="span12">
     <label class="control-label" for="local_image_title">Title</label>
@@ -37,4 +38,5 @@
     {% endif %}
   </div>
 </div>
+{% endif %}
 {% endblock %}
