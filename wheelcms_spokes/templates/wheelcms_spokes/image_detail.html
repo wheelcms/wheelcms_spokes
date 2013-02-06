@@ -8,19 +8,26 @@
 </div>
 <div class="row-fluid">
   <div class="span12">
+    <label class="control-label" for="local_image_title">Title</label>
+    <input id="local_image_title" type="text" name="local_title" value="{{instance.content.title}}"
+           maxlength="256">
+
     <div class="controls">
       <label class="control-label" for="size">Image size</label>
       <label class="checkbox">
-        <input type="radio" name="size" value="thumb" checked="checked"> thumb
+        <input type="radio" name="local_image_size" value="img_content_thumb"> Original
       </label>
       <label class="checkbox">
-        <input type="radio" name="size" value="small"> small
+        <input type="radio" name="local_image_size" value="img_content_thumb"> Thumb
       </label>
       <label class="checkbox">
-        <input type="radio" name="size" value="mediun"> medium
+        <input type="radio" name="local_image_size" value="img_content_small"> Small
       </label>
       <label class="checkbox">
-        <input type="radio" name="size" value="large"> large
+        <input type="radio" name="local_image_size" value="img_content_mediun"> Medium
+      </label>
+      <label class="checkbox">
+        <input type="radio" name="local_image_size" value="img_content_large"> Large
       </label>
     </div>
   </div>
