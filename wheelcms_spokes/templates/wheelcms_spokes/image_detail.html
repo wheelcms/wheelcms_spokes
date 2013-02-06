@@ -12,6 +12,10 @@
     <input id="local_image_title" type="text" name="local_title" value="{{instance.content.title}}"
            maxlength="256">
 
+    {% if mode == 'link' %}
+    <label class="control-label" for="local_image_title">Target</label>
+    <input id="local_image_target" type="text" name="local_title" value="" maxlength="256">
+    {% else %}
     <div class="controls">
       <label class="control-label" for="size">Image size</label>
       <label class="checkbox">
@@ -30,6 +34,7 @@
         <input type="radio" name="local_image_size" value="img_content_large"> Large
       </label>
     </div>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
