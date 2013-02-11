@@ -1,8 +1,7 @@
 from django.db import models
-from wheelcms_axle.models import type_registry
-from wheelcms_spokes.templates import template_registry
-from wheelcms_axle.models import Content
-from wheelcms_spokes.models import Spoke
+from wheelcms_axle.content import type_registry, Content
+from wheelcms_axle.templates import template_registry
+from wheelcms_axle.spoke import Spoke
 
 class News(Content):
     """ A news object """

@@ -1,9 +1,9 @@
 from django.db import models
 
 from wheelcms_axle.models import type_registry
-from wheelcms_spokes.templates import template_registry
-from wheelcms_axle.models import FileContent
-from wheelcms_spokes.models import FileSpoke
+from wheelcms_axle.templates import template_registry
+from wheelcms_axle.content import FileContent
+from wheelcms_axle.spoke import FileSpoke
 
 class File(FileContent):
     """ Holds a file """
