@@ -26,5 +26,5 @@ class FileType(FileSpoke):
         return "wheelcms_spokes/file_detail.html"
 
 
-template_registry.register(FileType, "wheelcms_spokes/file_view.html", "Basic News view", default=True)
+template_registry.register(FileType, "wheelcms_spokes/file_view.html", "Basic File view", default=True)
 type_registry.register(FileType)
