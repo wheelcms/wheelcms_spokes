@@ -36,7 +36,7 @@ class BaseImageFileTest(BaseSpokeTest):
                             filename="bar.png",
                             content_type="application/octet-stream").save()
         spoke = self.type(f)
-        response = spoke.handle_download()
+        response = spoke.download(None, None, 'download')
         assert response.content == data
         assert response.has_header('Content-Disposition')
         assert response['Content-Disposition'] == \
@@ -49,7 +49,7 @@ class BaseImageFileTest(BaseSpokeTest):
         storage=SimpleUploadedFile("foo.png", data)
         f = self.type.model(storage=storage).save()
         spoke = self.type(f)
-        response = spoke.handle_download()
+        response = spoke.download(None, None, 'download')
         assert response.content == data
         assert response.has_header('Content-Disposition')
         assert response['Content-Disposition'] == \
