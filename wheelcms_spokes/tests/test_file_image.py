@@ -6,9 +6,10 @@ import pytest
 
 from wheelcms_axle.tests.test_spoke import BaseSpokeTemplateTest, \
                                              BaseSpokeTest
-from wheelcms_spokes.file import FileType
-from wheelcms_spokes.image import ImageType
+from wheelcms_spokes.file import FileType, File
+from wheelcms_spokes.image import ImageType, Image
 from django.core.files.uploadedfile import SimpleUploadedFile
+from wheelcms_axle.tests.test_impexp import BaseSpokeImportExportTest
 
 
 class BaseImageFileTemplateTest(BaseSpokeTemplateTest):
@@ -85,6 +86,9 @@ class TestImageSpoke(BaseImageFileTest):
     type = ImageType
     typename = "image"
 
+class TestImageSpokeImpExp(BaseSpokeImportExportTest):
+    type = Image
+    spoke = ImageType
 
 class TestFileSpokeTemplate(BaseImageFileTemplateTest):
     """
@@ -102,3 +106,6 @@ class TestFileSpoke(BaseImageFileTest):
     type = FileType
     typename = "file"
 
+class TestImageFileImpExp(BaseSpokeImportExportTest):
+    type = File
+    spoke = FileType
