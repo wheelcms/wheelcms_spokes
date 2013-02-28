@@ -9,7 +9,6 @@ from wheelcms_axle.tests.test_impexp import BaseSpokeImportExportTest
 class TestPageSpokeTemplate(BaseSpokeTemplateTest):
     """ Test the Page type """
     type = PageType
-    typename = "page"
 
     def valid_data(self):
         """ return additional data for Page validation """
@@ -19,7 +18,6 @@ class TestPageSpokeTemplate(BaseSpokeTemplateTest):
 class TestPageSpoke(BaseSpokeTest):
     """ Test the Page type """
     type = PageType
-    typename = "page"
 
 class TestPageSpokeImpExp(BaseSpokeImportExportTest):
     type = Page

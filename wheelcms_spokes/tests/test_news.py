@@ -9,7 +9,6 @@ from wheelcms_axle.tests.test_impexp import BaseSpokeImportExportTest
 class TestNewsSpokeTemplate(BaseSpokeTemplateTest):
     """ Test the News type """
     type = NewsType
-    typename = "news"
 
     def valid_data(self):
         """ return additional data for News validation """
@@ -18,7 +17,6 @@ class TestNewsSpokeTemplate(BaseSpokeTemplateTest):
 class TestNewsSpoke(BaseSpokeTest):
     """ Test the News type """
     type = NewsType
-    typename = "news"
 
 class TestNewsSpokeImpExp(BaseSpokeImportExportTest):
     type = News

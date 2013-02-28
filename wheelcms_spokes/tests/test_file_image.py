@@ -76,7 +76,6 @@ class TestImageSpokeTemplate(BaseImageFileTemplateTest):
         Test the image spoke
     """
     type = ImageType
-    typename = "image"
 
 
 class TestImageSpoke(BaseImageFileTest):
@@ -84,28 +83,39 @@ class TestImageSpoke(BaseImageFileTest):
         Test the image spoke
     """
     type = ImageType
-    typename = "image"
+
 
 class TestImageSpokeImpExp(BaseSpokeImportExportTest):
     type = Image
     spoke = ImageType
+
 
 class TestFileSpokeTemplate(BaseImageFileTemplateTest):
     """
         Test the file spoke
     """
     type = FileType
-    typename = "file"
 
 
 class TestFileSpoke(BaseImageFileTest):
     """
         Test the file spoke
-
     """
     type = FileType
-    typename = "file"
+
 
 class TestImageFileImpExp(BaseSpokeImportExportTest):
     type = File
     spoke = FileType
+
+    def create(self, **kw):
+        f = SimpleUploadedFile("foo.png", 
+                    'GIF87a\x01\x00\x01\x00\x80\x01\x00\x00\x00\x00ccc,\x00'
+                    '\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;')
+        t = self.type(storage=f, **kw).save()
+        tt = self.spoke(t)
+        return tt
+
+    def test_capable_serialize(self, client):
+        # import pytest; pytest.set_trace()
+        super(TestImageFileImpExp, self).test_capable_serialize(client)
