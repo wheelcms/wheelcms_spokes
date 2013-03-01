@@ -35,5 +35,3 @@ class PageType(Spoke):
 type_registry.register(PageType)
 template_registry.register(PageType, "wheelcms_spokes/page_view.html",
                            "Basic Page view", default=True)
-template_registry.register(PageType, "wheelcms_spokes/page_view_frontpage.html",
-                           "Frontpage Page view")
