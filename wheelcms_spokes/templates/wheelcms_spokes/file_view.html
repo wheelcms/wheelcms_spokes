@@ -1,3 +1,6 @@
+{% extends "wheelcms_axle/base.html" %}
+
+{% block base_main %}
 <div class="row">
   <div class="span12">
     <h1>{{content.title}}</h1>
@@ -8,3 +11,4 @@
     <a href="{{MEDIA_URL}}{{content.storage}}">Download this file</a>
   </div>
 </div>
+{% endblock %}
