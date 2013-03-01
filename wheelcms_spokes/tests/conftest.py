@@ -1,1 +1,1 @@
-from twotest.conftest import client, django_client
+from twotest.fixtures import client, django_client
