@@ -25,10 +25,10 @@ class PageForm(formfactory(Page)):
 
 
 class PageType(Spoke):
+    document_fields = Spoke.document_fields + ("body", )
+
     model = Page
-
     title = "A simple HTML page"
-
     form = PageForm
 
 
