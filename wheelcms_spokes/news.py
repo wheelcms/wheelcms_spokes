@@ -14,8 +14,7 @@ class NewsType(Spoke):
 
     title = "A simple News item"
 
-    def icon(self):
-        return "news.png"
+    icon = "news.png"
 
 template_registry.register(NewsType, "wheelcms_spokes/news_view.html", "Basic News view", default=True)
 type_registry.register(NewsType)

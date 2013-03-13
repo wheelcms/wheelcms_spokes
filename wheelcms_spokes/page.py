@@ -30,6 +30,7 @@ class PageType(Spoke):
     title = "A simple HTML page"
     form = PageForm
 
+    @property
     def icon(self):
         if self.instance.node.children():
             return "folder_page.png"
