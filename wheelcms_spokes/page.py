@@ -19,7 +19,6 @@ class Page(Content):
     body = models.TextField(blank=False)
     # body = HTMLField(blank=False)
 
-
 class PageForm(formfactory(Page)):
     body = forms.CharField(widget=TinyMCE(), required=False)
 
@@ -30,6 +29,11 @@ class PageType(Spoke):
     model = Page
     title = "A simple HTML page"
     form = PageForm
+
+    def icon(self):
+        if self.instance.node.children():
+            return "folder_page.png"
+        return "page.png"
 
 
 type_registry.register(PageType)

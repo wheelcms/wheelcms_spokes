@@ -21,6 +21,10 @@ class FileType(FileSpoke):
     title = "A file"
     children = ()
 
+    def icon(self):
+        ## chose from type-specific files, e.g. pdf, word, excel..
+        return "file.png"
+
     def detail_template(self):
         """ A small detail template, used in browse modal """
         return "wheelcms_spokes/file_detail.html"
