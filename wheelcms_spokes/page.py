@@ -32,7 +32,7 @@ class PageType(Spoke):
 
     @property
     def icon(self):
-        if self.instance.node.children():
+        if self.instance.node.children().exists():
             return "folder_page.png"
         return "page.png"
 
