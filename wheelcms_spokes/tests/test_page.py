@@ -4,7 +4,7 @@
 from wheelcms_axle.tests.test_spoke import BaseSpokeTest, BaseSpokeTemplateTest
 from wheelcms_spokes.page import PageType, Page
 from wheelcms_axle.tests.test_impexp import BaseSpokeImportExportTest
-
+from wheelcms_axle.tests.test_search import BaseTestSearch
 
 class TestPageSpokeTemplate(BaseSpokeTemplateTest):
     """ Test the Page type """
@@ -22,3 +22,6 @@ class TestPageSpoke(BaseSpokeTest):
 class TestPageSpokeImpExp(BaseSpokeImportExportTest):
     type = Page
     spoke = PageType
+
+class TestPageSpokeSearch(BaseTestSearch):
+    type = PageType

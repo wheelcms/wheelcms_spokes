@@ -10,6 +10,7 @@ from wheelcms_spokes.file import FileType, File
 from wheelcms_spokes.image import ImageType, Image
 from django.core.files.uploadedfile import SimpleUploadedFile
 from wheelcms_axle.tests.test_impexp import BaseSpokeImportExportTest
+from wheelcms_axle.tests.test_search import BaseTestSearch
 
 
 class BaseImageFileTemplateTest(BaseSpokeTemplateTest):
@@ -89,6 +90,8 @@ class TestImageSpokeImpExp(BaseSpokeImportExportTest):
     type = Image
     spoke = ImageType
 
+class TestImageSpokeSearch(BaseTestSearch):
+    type = ImageType
 
 class TestFileSpokeTemplate(BaseImageFileTemplateTest):
     """
@@ -119,3 +122,6 @@ class TestImageFileImpExp(BaseSpokeImportExportTest):
     def test_capable_serialize(self, client):
         # import pytest; pytest.set_trace()
         super(TestImageFileImpExp, self).test_capable_serialize(client)
+
+class TestFileSpokeSearch(BaseTestSearch):
+    type = FileType

@@ -4,7 +4,7 @@
 from wheelcms_axle.tests.test_spoke import BaseSpokeTest, BaseSpokeTemplateTest
 from wheelcms_spokes.news import NewsType, News
 from wheelcms_axle.tests.test_impexp import BaseSpokeImportExportTest
-
+from wheelcms_axle.tests.test_search import BaseTestSearch
 
 class TestNewsSpokeTemplate(BaseSpokeTemplateTest):
     """ Test the News type """
@@ -21,3 +21,6 @@ class TestNewsSpoke(BaseSpokeTest):
 class TestNewsSpokeImpExp(BaseSpokeImportExportTest):
     type = News
     spoke = NewsType
+
+class TestNewsSpokeSearch(BaseTestSearch):
+    type = NewsType
