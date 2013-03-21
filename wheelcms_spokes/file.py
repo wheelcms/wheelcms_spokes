@@ -21,7 +21,7 @@ class FileType(FileSpoke):
     title = "A file"
     children = ()
 
-    icon = "file.png"
+    type_icon = icon = "file.png"
 
     def detail_template(self):
         """ A small detail template, used in browse modal """

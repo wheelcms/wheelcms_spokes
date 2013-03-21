@@ -15,7 +15,7 @@ class ImageType(FileSpoke):
     title = "An image"
     children = ()
 
-    icon = "image.png"
+    type_icon = icon = "image.png"
 
     def detail_template(self):
         """ A small detail template, used in browse modal """
