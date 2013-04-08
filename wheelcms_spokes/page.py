@@ -17,10 +17,17 @@ from tinymce.models import HTMLField
 ## Either HTMLField or TinyMCE widget. But a demonstration on how to alter
 ## a Spoke's form is also nice to have.
 
-class Page(Content):
+class PageBase(Content):
     """ A simple page object """
+
+    class Meta:
+        abstract = True
+
     body = models.TextField(blank=False)
     # body = HTMLField(blank=False)
+
+class Page(PageBase):
+    pass
 
 class PageForm(formfactory(Page)):
     body = forms.CharField(widget=TinyMCE(), required=False)
