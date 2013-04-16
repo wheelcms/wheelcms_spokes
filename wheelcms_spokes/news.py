@@ -9,10 +9,16 @@ from wheelcms_axle.spoke import Spoke
 from wheelcms_axle.forms import formfactory
 
 
-class News(Content):
+class NewsBase(Content):
     """ A news object """
+    class Meta:
+        abstract = True
+
     intro = models.TextField(blank=False)
     body = models.TextField(blank=False)
+
+class News(NewsBase):
+    pass
 
 class NewsForm(formfactory(News)):
     body = forms.CharField(widget=TinyMCE(), required=False)
