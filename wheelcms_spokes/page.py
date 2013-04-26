@@ -48,6 +48,10 @@ class PageType(Spoke):
 
     def index_description(self):
         """ truncate body text if no explicit description available """
+        return self.description()
+
+    def description(self):
+        """ truncate body text if no explicit description available """
         if self.instance.description:
             return self.instance.description
 
