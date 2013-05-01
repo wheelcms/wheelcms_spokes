@@ -1,6 +1,9 @@
 from django.db import models
 from django import forms
 
+from django.utils.html import strip_tags
+from django.utils.text import Truncator
+
 from tinymce.widgets import TinyMCE
 
 from wheelcms_axle.content import type_registry, Content
@@ -31,5 +34,19 @@ class NewsType(Spoke):
 
     type_icon = icon = "news.png"
 
+    def index_description(self):
+        """ truncate body text if no explicit description available """
+        return self.description()
+
+    def description(self):
+        """ truncate body text if no explicit description available """
+        if self.instance.intro:
+            return self.instance.intro
+
+        if self.instance.description:
+            return self.instance.description
+
+        return Truncator(strip_tags(self.instance.body)).words(50,
+                         truncate=" ...")
 template_registry.register(NewsType, "wheelcms_spokes/news_view.html", "Basic News view", default=True)
 type_registry.register(NewsType)
