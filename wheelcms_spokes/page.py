@@ -67,6 +67,17 @@ class PageType(Spoke):
 
         return PageIndex
 
+def contentlisting_context(handler, request, node):
+    q = node.children()
+
+    if not request.user.is_superuser:
+        q = q.filter(contentbase__state="published")
+
+    return dict(contents=q)
+
 type_registry.register(PageType)
 template_registry.register(PageType, "wheelcms_spokes/page_view.html",
                            "Basic Page view", default=True)
+template_registry.register(PageType, "wheelcms_spokes/page_contents.html",
+                           "Contents Listing", default=False,
+                           context=contentlisting_context)
