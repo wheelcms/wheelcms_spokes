@@ -10,7 +10,7 @@ from wheelcms_axle.templates import template_registry
 from wheelcms_axle.spoke import Spoke, indexfactory, SpokeCharField
 from wheelcms_axle.forms import formfactory
 
-from tinymce.widgets import TinyMCE
+from wheelcms_axle.forms import TinyMCE
 from tinymce.models import HTMLField
 
 ##
