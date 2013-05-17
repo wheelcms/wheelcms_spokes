@@ -6,37 +6,4 @@
    <img class="img-polaroid detail-image" src="{{MEDIA_URL}}{{instance.content.storage}}">
  </div>
 </div>
-{% if selectable %}
-<div class="row-fluid">
-  <div class="span12">
-    <label class="control-label" for="local_image_title">Title</label>
-    <input id="local_image_title" type="text" name="local_title" value="{{instance.content.title}}"
-           maxlength="256">
-
-    {% if mode == 'link' %}
-    <label class="control-label" for="local_image_title">Target</label>
-    <input id="local_image_target" type="text" name="local_title" value="" maxlength="256">
-    {% else %}
-    <div class="controls">
-      <label class="control-label" for="size">Image size</label>
-      <label class="checkbox">
-        <input type="radio" name="local_image_size" value="img_content_original"> Original
-      </label>
-      <label class="checkbox">
-        <input type="radio" name="local_image_size" value="img_content_thumb"> Thumb
-      </label>
-      <label class="checkbox">
-        <input type="radio" name="local_image_size" value="img_content_small"> Small
-      </label>
-      <label class="checkbox">
-        <input type="radio" name="local_image_size" value="img_content_medium"> Medium
-      </label>
-      <label class="checkbox">
-        <input type="radio" name="local_image_size" value="img_content_large"> Large
-      </label>
-    </div>
-    {% endif %}
-  </div>
-</div>
-{% endif %}
 {% endblock %}
