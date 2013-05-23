@@ -37,7 +37,7 @@ class PageType(Spoke):
     document_fields = Spoke.document_fields + ("body", )
 
     model = Page
-    title = "A simple HTML page"
+    title = "A page"
     form = PageForm
 
     @property
