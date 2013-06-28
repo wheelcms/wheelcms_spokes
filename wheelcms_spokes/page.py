@@ -8,7 +8,9 @@ from wheelcms_axle.content import type_registry
 from wheelcms_axle.content import Content
 from wheelcms_axle.templates import template_registry
 from wheelcms_axle.spoke import Spoke, indexfactory, SpokeCharField
+from wheelcms_axle.node import Node
 from wheelcms_axle.forms import formfactory
+from wheelcms_axle import access
 
 from wheelcms_axle.forms import TinyMCE
 from tinymce.models import HTMLField
@@ -67,11 +69,12 @@ class PageType(Spoke):
 
         return PageIndex
 
-def contentlisting_context(handler, request, node):
-    q = node.children()
 
-    if not request.user.is_superuser:
-        q = q.filter(contentbase__state="published")
+def contentlisting_context(handler, request, node):
+    q = Node.objects.children(node)
+
+    if not access.has_access(request.user, node):
+        q = q.public()
 
     return dict(contents=q)
 
