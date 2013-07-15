@@ -16,7 +16,7 @@
       {% with content=n.content spoke=n.content.spoke %}
     <tr class="state-{{result.state}}">
       <td>
-        <span class="title"><img class="icon" src="{{spoke.full_icon_path}}"><a href="{{ n.path }}">{{ content.title }}</a></span>
+        <span class="title"><img class="icon" src="{{spoke.full_icon_path}}"><a href="{{ n.get_absolute_url }}">{{ content.title }}</a></span>
         <span class="byline">{% if content.state == "private" %}<span class="badge badge-important">private</span>{%endif%} by {{spoke.owner_name}} &mdash; published {{content.publication}} &mdash; last modified {{content.modified}} {# &mdash; filed under foo, bar #}</span>
         <p>{{spoke.description|default:''|safe}}</p>
       </td>
