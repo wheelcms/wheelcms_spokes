@@ -15,6 +15,8 @@ class ImageType(FileSpoke):
     title = "An image"
     children = ()
 
+    default_language = 'any'  # images are usually not language specific
+
     type_icon = icon = "image.png"
 
     def detail_template(self):
