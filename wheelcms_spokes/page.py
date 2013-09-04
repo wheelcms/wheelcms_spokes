@@ -9,8 +9,11 @@ from wheelcms_axle.content import Content
 from wheelcms_axle.templates import template_registry
 from wheelcms_axle.spoke import Spoke, indexfactory, SpokeCharField
 from wheelcms_axle.node import Node
+from wheelcms_axle.node import node_proxy_factory
+
 from wheelcms_axle.forms import formfactory
 from wheelcms_axle import access
+from wheelcms_axle.utils import get_active_language
 
 from wheelcms_axle.forms import TinyMCE
 from tinymce.models import HTMLField
@@ -71,7 +74,9 @@ class PageType(Spoke):
 
 
 def contentlisting_context(handler, request, node):
-    q = Node.objects.children(node)
+    language = get_active_language(request)
+
+    q = node_proxy_factory(Node, language).objects.children(node).filter(contentbase__language=language)
 
     if not access.has_access(request.user, node):
         q = q.public()
