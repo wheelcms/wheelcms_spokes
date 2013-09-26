@@ -76,7 +76,7 @@ class PageType(Spoke):
 def contentlisting_context(handler, request, node):
     language = get_active_language(request)
 
-    q = node_proxy_factory(Node, language).objects.children(node).filter(contentbase__language=language)
+    q = node_proxy_factory(Node, language).objects.children(node).filter(contentbase__language=language).order_by("position")
 
     if not access.has_access(request.user, node):
         q = q.public()
