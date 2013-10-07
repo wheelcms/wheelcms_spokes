@@ -1,9 +1,9 @@
 {% extends "wheelcms_axle/popup_detail.html" %}
 
 {% block content %}
-<div class="row-fluid">
- <div class="span12 image-content">
-   <img class="img-polaroid detail-image" src="{{MEDIA_URL}}{{instance.content.storage}}">
- </div>
+<div class="row">
+ <center class="col-lg-offset-2 col-lg-10 image-content ">
+   <img class="img-polaroid detail-image img-thumbnail" src="{{MEDIA_URL}}{{instance.content.storage}}">
+ </center>
 </div>
 {% endblock %}
