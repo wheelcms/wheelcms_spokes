@@ -72,6 +72,12 @@ class PageType(Spoke):
 
         return PageIndex
 
+    def context(self, handler, request, node):
+        ctx = super(PageType, self).context(handler, request, node)
+        wpm = 180  # avg adult for monitor
+        # XXX NOTTESTED
+        ctx['reading_minutes'] = (len(strip_tags(self.instance.body).split())/wpm) + 1
+        return ctx
 
 def contentlisting_context(handler, request, node):
     language = get_active_language(request)
