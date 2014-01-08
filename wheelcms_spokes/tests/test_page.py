@@ -5,6 +5,7 @@ from wheelcms_axle.tests.test_spoke import BaseSpokeTest, BaseSpokeTemplateTest
 from wheelcms_spokes.page import PageType, Page
 from wheelcms_axle.tests.test_impexp import BaseSpokeImportExportTest
 from wheelcms_axle.tests.test_search import BaseTestSearch
+from wheelcms_axle.tests.utils import MockedQueryDict
 
 class TestPageSpokeTemplate(BaseSpokeTemplateTest):
     """ Test the Page type """
@@ -12,7 +13,7 @@ class TestPageSpokeTemplate(BaseSpokeTemplateTest):
 
     def valid_data(self):
         """ return additional data for Page validation """
-        return dict(body="Hello World")
+        return MockedQueryDict(body="Hello World")
 
 
 class TestPageSpoke(BaseSpokeTest):
