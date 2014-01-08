@@ -1,11 +1,11 @@
 twotest
-stracks_api
 south
 django-haystack==1.2.7
 django-taggit
 django-tinymce
 django-userena
 Pillow
+stracks-api==0.2dev
 git+git://github.com/iivvoo/two.ol
 git+git://github.com/iivvoo/two.bootstrap
 git+git://github.com/wheelcms/wheelcms_axle.git
