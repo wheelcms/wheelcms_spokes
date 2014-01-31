@@ -11,9 +11,9 @@ class TestPageSpokeTemplate(BaseSpokeTemplateTest):
     """ Test the Page type """
     type = PageType
 
-    def valid_data(self):
+    def valid_data(self, **kw):
         """ return additional data for Page validation """
-        return MockedQueryDict(body="Hello World")
+        return MockedQueryDict(body="Hello World", **kw)
 
 
 class TestPageSpoke(BaseSpokeTest):

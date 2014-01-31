@@ -11,9 +11,9 @@ class TestNewsSpokeTemplate(BaseSpokeTemplateTest):
     """ Test the News type """
     type = NewsType
 
-    def valid_data(self):
+    def valid_data(self, **kw):
         """ return additional data for News validation """
-        return MockedQueryDict(intro="Hi There!", body="Hello World")
+        return MockedQueryDict(intro="Hi There!", body="Hello World", **kw)
 
 class TestNewsSpoke(BaseSpokeTest):
     """ Test the News type """
