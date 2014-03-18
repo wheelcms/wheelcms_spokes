@@ -80,7 +80,7 @@ class PageType(Spoke):
         return ctx
 
 def contentlisting_context(handler, request, node):
-    language = get_active_language(request)
+    language = get_active_language()
 
     q = node_proxy_factory(Node, language).objects.children(node).filter(contentbase__language=language).order_by("position")
 
