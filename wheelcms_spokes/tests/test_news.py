@@ -20,7 +20,7 @@ class TestNewsSpoke(BaseSpokeTest):
     type = NewsType
 
 class TestNewsSpokeImpExp(BaseSpokeImportExportTest):
-    type = News
+    type = NewsType
     spoke = NewsType
 
 class TestNewsSpokeSearch(BaseTestSearch):

@@ -21,7 +21,7 @@ class TestPageSpoke(BaseSpokeTest):
     type = PageType
 
 class TestPageSpokeImpExp(BaseSpokeImportExportTest):
-    type = Page
+    type = PageType
     spoke = PageType
 
 class TestPageSpokeSearch(BaseTestSearch):

@@ -87,7 +87,7 @@ class TestImageSpoke(BaseImageFileTest):
 
 
 class TestImageSpokeImpExp(BaseSpokeImportExportTest):
-    type = Image
+    type = ImageType
     spoke = ImageType
 
 class TestImageSpokeSearch(BaseTestSearch):
@@ -108,14 +108,14 @@ class TestFileSpoke(BaseImageFileTest):
 
 
 class TestImageFileImpExp(BaseSpokeImportExportTest):
-    type = File
+    type = FileType
     spoke = FileType
 
     def create(self, **kw):
         f = SimpleUploadedFile("foo.png", 
                     'GIF87a\x01\x00\x01\x00\x80\x01\x00\x00\x00\x00ccc,\x00'
                     '\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;')
-        t = self.type(storage=f, **kw).save()
+        t = self.type.model(storage=f, **kw).save()
         tt = self.spoke(t)
         return tt
 
