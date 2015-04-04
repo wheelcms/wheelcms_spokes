@@ -15,7 +15,11 @@ if __name__ == '__main__':
 
             'wheelcms_axle',
             'wheelcms_spokes',
+            'userena',
+            'wheelcms_spokes',
 
+            'drole',
+            'granules',
             'taggit',
             'two.bootstrap',
             'twotest',
