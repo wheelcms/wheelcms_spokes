@@ -16,6 +16,7 @@ if __name__ == '__main__':
             'wheelcms_axle',
             'wheelcms_spokes',
             'userena',
+            'guardian',
             'wheelcms_spokes',
 
             'drole',
